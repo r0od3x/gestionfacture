@@ -7,7 +7,7 @@ import pandas as pd
 import psycopg2
 from psycopg2.extras import execute_values
 import os
-import main as backend
+import config
 from collections import defaultdict
 import tkinter as tk
 from tkinter import filedialog
@@ -48,7 +48,7 @@ df = df.drop_duplicates(subset=['nomenclature', 'declaration', 'qenkg'], keep='f
 
 
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\tesseract\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = config.TESSERACT_CMD
 
 
 df['date'] = df['date'].apply(
@@ -58,15 +58,9 @@ df['date'] = df['date'].apply(
 )
 
 
-print("hiiiiiiiiiiiii")
 
 # Connect to PostgreSQL
-conn = psycopg2.connect(
-    host="localhost",
-    database="sommier",
-    user="postgres",
-    password="reda2005"
-)
+conn = psycopg2.connect(**config.DB_CONFIG)
 cursor = conn.cursor()
 
 cursor.execute("DELETE FROM sommier;")
@@ -206,11 +200,11 @@ def verifierfiles(fprod, fcess):
 
 
 def extractcession(filepath):
-    images = convert_from_path(filepath)
+    images = convert_from_path(filepath, poppler_path=config.POPPLER_PATH)
     full_text = ""
 
     for img in images:
-        full_text += pytesseract.image_to_string(img, lang='fra') + "\n"
+        full_text += pytesseract.image_to_string(img, lang=config.TESSERACT_LANG) + "\n"
 
     # Clean lines
     lines = [line.strip() for line in full_text.splitlines() if line.strip()]
@@ -396,12 +390,7 @@ def convert_to_datetime(value):
 def get_and_process_rows(names, values_to_remove, output_excel='SOMMIER.xlsx'):
     weight = []
     
-    conn = psycopg2.connect(
-        host="localhost",
-        database="sommier",
-        user="postgres",
-        password="reda2005"
-    )
+    conn = psycopg2.connect(**config.DB_CONFIG)
     cursor = conn.cursor()
 
     placeholders = ','.join(['%s'] * len(names))

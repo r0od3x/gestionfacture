@@ -1,0 +1,10 @@
+customtkinter
+matplotlib
+openpyxl
+pandas
+pdf2image
+pdfminer.six
+psycopg2-binary
+pytesseract
+python-dotenv
+xlwings
