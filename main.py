@@ -11,11 +11,6 @@ import config
 from collections import defaultdict
 import tkinter as tk
 from tkinter import filedialog
-import pandas as pd
-import psycopg2
-import re
-import pandas as pd
-import re
 from datetime import datetime, timedelta, date
 
 
@@ -84,7 +79,6 @@ conn.close()
 
 
 
-import re
 
 def extractdata(filepath):
 
@@ -153,7 +147,6 @@ def extractdata(filepath):
 
 
 
-import re
 
 def verifierfiles(fprod, fcess):
     k = 0
@@ -301,11 +294,7 @@ def calculpoidsnet(total, dechet):
 
  
 
-import re
-from collections import defaultdict
 
-import re
-from collections import defaultdict
 
 def calculercomposition(composition, cannelure, surface, quantite_str):
     words = re.findall(r'\S+', quantite_str)  # Matches non-space tokens

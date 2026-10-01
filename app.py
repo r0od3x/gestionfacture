@@ -16,9 +16,7 @@ import export_attestation as export
 import export_calcul as exportcalcul
 import customtkinter as ctk
 import threading
-import tkinter as tk
 from tkinter import filedialog, messagebox
-import re
 import matplotlib.pyplot as plt
 from tkinter import ttk, filedialog
 import matplotlib.gridspec as gridspec
